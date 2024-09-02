@@ -16,6 +16,8 @@ const Country = ({country}) => {
   
   if(country && weather){
     const languages = Object.keys(country.languages).map(key => country.languages[key]);
+    const imageUrl = weatherService.getIconUrl(weather.weather[0].icon);
+    console.log(imageUrl)
     return(
       <>
         <h1>{country.name.common}</h1>
@@ -29,11 +31,9 @@ const Country = ({country}) => {
         </ul>
         <img className="flag" src={country.flags.svg} alt={country.flags.alt} />
         <h2>Weather in {country.capital[0]}</h2>
-        <p>Temperature: {() => {
-          return (weather.main.temp - 32) / 1.8
-        }}</p>
-        <img src={() => weatherService.getIconUrl(weather.weather[0].icon)} alt={weather.weather[0].description} />
-        <p>Wind</p>
+        <p>Temperature: {weather.main.temp} Celcius</p>
+        <img src={imageUrl} alt={weather.weather[0].description} />
+        <p>Wind: {weather.wind.speed} m/s</p>
       </>
     )
   }
